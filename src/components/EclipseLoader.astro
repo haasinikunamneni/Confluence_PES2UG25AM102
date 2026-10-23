@@ -1,0 +1,76 @@
+<!-- Progressive request feedback: no initial page-blocking loader. The compact indicator is
+     activated only by real fetch requests that exceed the configured thresholds. -->
+<div class="request-feedback" id="request-feedback" role="status" aria-live="polite" aria-atomic="true" hidden>
+  <span class="request-feedback__dot" aria-hidden="true"></span>
+  <span class="request-feedback__label">Still working…</span>
+  <span class="request-feedback__eclipse" aria-hidden="true"><i></i></span>
+</div>
+<script is:inline>
+(() => {
+  if (window.__confluenceRequestFeedbackInstalled) return;
+  window.__confluenceRequestFeedbackInstalled = true;
+  const indicator = document.getElementById('request-feedback');
+  if (!indicator || !window.fetch) return;
+  const label = indicator.querySelector('.request-feedback__label');
+  const dot = indicator.querySelector('.request-feedback__dot');
+  const eclipse = indicator.querySelector('.request-feedback__eclipse');
+  const active = new Set();
+  const timers = new Map();
+  const SHOW_AFTER = 1000;
+  const ECLIPSE_AFTER = 2800;
+  let showTimer = 0;
+  let hideTimer = 0;
+  const show = () => {
+    if (!active.size) return;
+    indicator.hidden = false;
+    indicator.classList.add('is-visible');
+    label.textContent = 'Still working…';
+  };
+  const clearUI = () => {
+    window.clearTimeout(showTimer);
+    window.clearTimeout(hideTimer);
+    active.clear();
+    for (const timerSet of timers.values()) timerSet.forEach(window.clearTimeout);
+    timers.clear();
+    indicator.classList.remove('is-visible', 'is-long-wait');
+    indicator.hidden = true;
+  };
+  const originalFetch = window.fetch.bind(window);
+  window.fetch = (...args) => {
+    const token = Symbol('request');
+    active.add(token);
+    const localTimers = [];
+    timers.set(token, localTimers);
+    localTimers.push(window.setTimeout(() => {
+      if (!active.has(token)) return;
+      show();
+    }, SHOW_AFTER));
+    localTimers.push(window.setTimeout(() => {
+      if (!active.has(token)) return;
+      show();
+      indicator.classList.add('is-long-wait');
+      label.textContent = 'The atmosphere is taking a moment…';
+    }, ECLIPSE_AFTER));
+    return originalFetch(...args).finally(() => {
+      active.delete(token);
+      localTimers.forEach(window.clearTimeout);
+      timers.delete(token);
+      if (!active.size) {
+        // Avoid a flash if the request completes before the first threshold.
+        if (!indicator.classList.contains('is-visible')) clearUI();
+        else {
+          indicator.classList.remove('is-visible', 'is-long-wait');
+          hideTimer = window.setTimeout(() => { if (!active.size) indicator.hidden = true; }, 120);
+        }
+      }
+    });
+  };
+  window.addEventListener('pagehide', clearUI, { once: true });
+})();
+</script>
+<style>
+.request-feedback{position:fixed;right:1rem;bottom:1rem;z-index:80;display:flex;align-items:center;gap:.65rem;max-width:calc(100vw - 2rem);padding:.65rem .85rem;border:1px solid rgba(169,189,224,.22);border-radius:999px;background:rgba(7,10,16,.94);color:#e7e9ef;box-shadow:0 8px 32px #0005;font:500 .78rem/1.4 Inter,system-ui,sans-serif;opacity:0;transform:translateY(5px);pointer-events:none;transition:opacity .18s ease,transform .18s ease;backdrop-filter:blur(8px)}
+.request-feedback[hidden]{display:none}.request-feedback.is-visible{opacity:1;transform:none}.request-feedback__dot{width:7px;height:7px;border-radius:50%;background:#a9bde0;box-shadow:0 0 10px #a9bde0;animation:request-pulse 1.4s ease-in-out infinite}.request-feedback__eclipse{display:none;position:relative;width:17px;height:17px;border-radius:50%;background:#05070b;box-shadow:0 0 8px 2px #c7d9f6,0 0 18px #7f9bd055}.request-feedback__eclipse:before{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid #dbe8ff66;filter:blur(1px)}.request-feedback__eclipse i{position:absolute;inset:2px;border-radius:50%;background:#05070b}.request-feedback.is-long-wait{border-radius:12px}.request-feedback.is-long-wait .request-feedback__dot{display:none}.request-feedback.is-long-wait .request-feedback__eclipse{display:block;flex:none}.request-feedback.is-long-wait .request-feedback__eclipse:before{animation:request-corona 2.8s ease-in-out infinite}
+@keyframes request-pulse{50%{opacity:.35;transform:scale(.8)}}@keyframes request-corona{50%{opacity:.5;transform:scale(1.12)}}
+@media(max-width:600px){.request-feedback{right:.75rem;bottom:.75rem;font-size:.72rem;max-width:calc(100vw - 1.5rem)}}@media(prefers-reduced-motion:reduce){.request-feedback,.request-feedback *{animation:none!important;transition:none!important}}
+</style>

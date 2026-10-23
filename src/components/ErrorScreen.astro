@@ -1,0 +1,55 @@
+---
+const {
+  code = '', title = 'Something went wrong.', message = 'An unexpected interruption stopped this page from loading.',
+  primaryAction = { label: 'Return home', href: '/' }, secondaryAction = null,
+  variant = 'storm', compact = false
+} = Astro.props;
+const primary = typeof primaryAction === 'string' ? { label: primaryAction, href: '/' } : primaryAction;
+const secondary = typeof secondaryAction === 'string' ? { label: secondaryAction, href: '/' } : secondaryAction;
+const retry = primary?.retry === true;
+---
+<main class:list={['error-screen', `error-screen--${variant}`, { 'error-screen--compact': compact }]} data-error-screen data-variant={variant}>
+  <div class="storm-scene" aria-hidden="true">
+    <div class="storm-scene__moon"><span></span></div>
+    <div class="storm-scene__cloud storm-scene__cloud--far"></div>
+    <div class="storm-scene__cloud storm-scene__cloud--mid"></div>
+    <div class="storm-scene__cloud storm-scene__cloud--near"></div>
+    <svg class="storm-scene__lightning" viewBox="0 0 180 280" focusable="false"><path d="M103 0 72 94 103 88 48 190 69 117 40 125Z"/></svg>
+    <div class="storm-scene__haze"></div>
+  </div>
+  <a class="error-wordmark" href="/" aria-label="Confluence home">CONFLUENCE<span>IEEE CS PESU</span></a>
+  <section class="error-content" aria-labelledby="error-title" role="alert">
+    {code && <p class="error-code">{code}</p>}
+    <p class="error-eyebrow">A pause in the journey</p>
+    <h1 id="error-title">{title}</h1>
+    <p class="error-message">{message}</p>
+    <div class="error-actions">
+      {retry ? <button class="error-button error-button--primary" type="button" data-error-retry>{primary.label}</button> : <a class="error-button error-button--primary" href={primary?.href || '/'}>{primary?.label || 'Return home'}</a>}
+      {secondary && <a class="error-button error-button--secondary" href={secondary.href || '/'}>{secondary.label}</a>}
+    </div>
+    <p class="error-footnote" data-error-feedback aria-live="polite"></p>
+  </section>
+</main>
+<style>
+  .error-screen{position:relative;isolation:isolate;min-height:100svh;overflow:hidden;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 37%,#142238 0%,#0b111d 43%,#070a10 76%);color:var(--mist,#e7e9ef);padding:7rem var(--gutter,clamp(1.25rem,4vw,3.5rem)) 4rem;font-family:var(--sans,Inter,system-ui,sans-serif)}
+  .error-wordmark{position:absolute;z-index:3;top:clamp(1.4rem,4vw,2.6rem);left:var(--gutter,clamp(1.25rem,4vw,3.5rem));display:flex;flex-direction:column;gap:.25rem;color:#e7e9ef;text-decoration:none;font:400 clamp(1.25rem,2vw,1.7rem)/1 var(--serif,Georgia,serif);letter-spacing:.3em}.error-wordmark span{font:500 .58rem/1.4 var(--sans,system-ui,sans-serif);letter-spacing:.22em;color:#a9bde0}
+  .storm-scene{position:absolute;z-index:-1;inset:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 51% 36%,rgba(91,124,170,.12),transparent 35%)}.storm-scene__moon{position:absolute;width:clamp(150px,23vw,290px);aspect-ratio:1;border-radius:50%;left:50%;top:34%;transform:translate(-50%,-50%);background:radial-gradient(circle at 34% 30%,#e8eef7 0,#9caec8 22%,#35465f 57%,#101827 72%);box-shadow:0 0 2px 1px rgba(228,239,255,.9),0 0 22px 5px rgba(169,189,224,.36),0 0 90px 20px rgba(100,137,191,.12);overflow:hidden;animation:moon-breathe 9s ease-in-out infinite}.storm-scene__moon:after{content:"";position:absolute;inset:-3%;border-radius:50%;background:radial-gradient(circle at 28% 50%,#020407 0 54%,rgba(3,5,9,.98) 57%,transparent 61%);transform:translateX(25%)}.storm-scene__moon span{position:absolute;inset:0;border-radius:50%;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.16) 58%,transparent 74%);mix-blend-mode:screen}
+  .storm-scene__cloud{position:absolute;left:-15%;width:130%;height:clamp(90px,18vw,210px);border-radius:50%;filter:blur(19px);background:radial-gradient(ellipse at 25% 60%,rgba(100,124,158,.35),transparent 42%),radial-gradient(ellipse at 58% 45%,rgba(50,68,96,.78),transparent 47%),radial-gradient(ellipse at 83% 64%,rgba(113,134,165,.23),transparent 38%);opacity:.85}.storm-scene__cloud--far{top:20%;transform:rotate(-8deg) scale(1.1);opacity:.43;animation:cloud-drift 58s linear infinite alternate}.storm-scene__cloud--mid{top:31%;transform:rotate(5deg) scale(1.2);opacity:.8;animation:cloud-drift 43s ease-in-out infinite alternate-reverse}.storm-scene__cloud--near{top:42%;height:clamp(100px,20vw,230px);transform:rotate(-4deg);opacity:.76;animation:cloud-drift 35s ease-in-out infinite alternate}.storm-scene__haze{position:absolute;inset:45% -10% -15%;background:linear-gradient(180deg,transparent,rgba(7,10,16,.8) 55%,#070a10);}
+  .storm-scene__lightning{position:absolute;top:12%;right:20%;width:clamp(55px,9vw,120px);height:auto;opacity:0;filter:drop-shadow(0 0 7px #a9c8f6);animation:lightning 17s 4s infinite}.storm-scene__lightning path{fill:rgba(205,226,255,.9)}.error-screen--calm .storm-scene__lightning,.error-screen--empty .storm-scene__lightning{display:none}.error-screen--calm .storm-scene__cloud,.error-screen--empty .storm-scene__cloud{opacity:.45}
+  .error-content{position:relative;z-index:2;width:min(100%,650px);margin-top:clamp(5rem,14vh,9rem);text-align:center;animation:message-arrive .9s .12s both}.error-code{margin:0 0 1rem;color:#a9bde0;font-size:.8rem;font-weight:600;letter-spacing:.3em}.error-eyebrow{margin:0 0 1.1rem;color:#b8c7df;text-transform:uppercase;font-size:.68rem;letter-spacing:.28em}.error-content h1{margin:0;color:#f0f2f7;font:400 clamp(2.3rem,5.8vw,4.5rem)/1.1 var(--serif,Georgia,serif);letter-spacing:-.035em;text-wrap:balance;text-shadow:0 2px 28px rgba(0,0,0,.35)}.error-message{max-width:490px;margin:1.35rem auto 0;color:#c0cada;font-size:clamp(.96rem,1.5vw,1.08rem);line-height:1.8;text-wrap:pretty}.error-actions{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.8rem;margin-top:2rem}.error-button{min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:.85rem 1.4rem;border:1px solid rgba(169,189,224,.4);border-radius:3px;font:600 .83rem var(--sans,system-ui,sans-serif);letter-spacing:.035em;text-decoration:none;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.error-button:hover{transform:translateY(-2px)}.error-button:focus-visible,.error-wordmark:focus-visible{outline:2px solid #dbe8ff;outline-offset:4px}.error-button--primary{color:#070a10;background:#dce5f4;border-color:#dce5f4}.error-button--primary:hover{background:#fff}.error-button--secondary{color:#e7e9ef;background:rgba(7,10,16,.25)}.error-button--secondary:hover{background:rgba(169,189,224,.1);border-color:#a9bde0}.error-footnote{min-height:1.3rem;margin:1rem 0 0;color:#a9bde0;font-size:.82rem}.error-screen--compact{min-height:70svh;padding-top:4rem}.error-screen--compact .error-content{margin-top:4rem}
+  @keyframes cloud-drift{from{translate:-1.5% 0}to{translate:2.5% 5px}}@keyframes moon-breathe{0%,100%{filter:brightness(.94)}50%{filter:brightness(1.08)}}@keyframes lightning{0%,78%,80%,100%{opacity:0}79%{opacity:.7}79.3%{opacity:.12}79.7%{opacity:.52}80.1%{opacity:0}}@keyframes message-arrive{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:600px){.error-screen{padding:6.5rem 1.25rem 3rem;min-height:100svh}.storm-scene__moon{top:27%;width:clamp(140px,43vw,205px)}.storm-scene__cloud--far{top:17%}.storm-scene__cloud--mid{top:25%}.storm-scene__cloud--near{top:33%;height:130px}.storm-scene__lightning{right:8%;top:14%}.error-content{margin-top:clamp(6rem,20vh,10rem)}.error-content h1{font-size:clamp(2.2rem,10vw,3.4rem)}.error-message{line-height:1.7}.error-actions{flex-direction:column;align-items:stretch;width:min(100%,310px);margin:1.7rem auto 0}.error-button{width:100%}}
+  @media(prefers-reduced-motion:reduce){.storm-scene__moon,.storm-scene__cloud,.storm-scene__lightning,.error-content{animation:none!important}.storm-scene__lightning{display:none}.error-content{opacity:1;transform:none}}
+</style>
+<script>
+  const root = document.querySelector('[data-error-screen]');
+  const retryButton = root?.querySelector('[data-error-retry]');
+  retryButton?.addEventListener('click', () => {
+    const feedback = root.querySelector('[data-error-feedback]');
+    retryButton.setAttribute('aria-busy', 'true');
+    retryButton.disabled = true;
+    if (feedback) feedback.textContent = 'Retrying…';
+    // Reloading is safe for a failed page/request screen. Forms should retry their own preserved submission instead.
+    window.location.reload();
+  });
+</script>

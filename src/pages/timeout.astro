@@ -1,0 +1,4 @@
+---
+import ErrorScreen from '../components/ErrorScreen.astro'; import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="Request Timeout | Confluence" description="The request took longer than expected."><ErrorScreen code="REQUEST TIMEOUT" title="This is taking longer than expected." message="The request hasn’t completed yet. Please try again." primaryAction={{label:'Try again',retry:true}} secondaryAction={{label:'Return home',href:'/'}} variant="storm" /></SiteLayout>

@@ -1,0 +1,48 @@
+/* ==========================================================================
+   DESIGN TOKENS — the only place colours, type and spacing are defined.
+   ========================================================================== */
+@font-face{
+  font-family:"Bodoni Moda";
+  src:url("../assets/fonts/bodoni-moda-latin-opsz.woff2") format("woff2");
+  font-weight:400 900; font-style:normal; font-display:swap;
+}
+@font-face{
+  font-family:"Inter";
+  src:url("../assets/fonts/inter-latin-wght.woff2") format("woff2");
+  font-weight:100 900; font-style:normal; font-display:swap;
+}
+
+:root{
+  /* Palette (from the brief) */
+  --obsidian:#070A10;
+  --navy:#101A2B;
+  --steel:#526B91;
+  --ice:#A9BDE0;
+  --mist:#E7E9EF;
+  --dawn:#DCCDB8;
+
+  /* Derived text colours (checked for contrast on --obsidian / --navy) */
+  --text:var(--mist);
+  --muted:#9AAAC4;
+  --line:rgba(169,189,224,.16);
+  --line-strong:rgba(169,189,224,.34);
+
+  --serif:"Bodoni Moda","Bodoni 72",Didot,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+
+  --header-h:76px;
+  --gutter:clamp(1.1rem,4vw,3.25rem);
+  --maxw:1180px;
+  --content-max:1180px;
+  --section-space:clamp(4rem,9vw,7.5rem);
+  --card-pad:clamp(1.1rem,2.5vw,1.8rem);
+  --grid-gap:clamp(1rem,2.5vw,1.75rem);
+  --radius:14px;
+
+  /* Environment variables — written by js/main.js while scrolling.
+     --p  : journey progress 0 (nightfall) → 1 (dawn)
+     --k-*: eased intensities of each sky layer                      */
+  --p:0; --k-blue:0; --k-lav:0; --k-dawn:0;
+  /* Sun & clouds (also written by js/main.js): --sun 0 = below horizon, 1 = fully risen */
+  --sun:0; --k-halo:.2; --k-lit:.3; --k-vis:0; --k-cloud:0; --k-warm:0;
+}

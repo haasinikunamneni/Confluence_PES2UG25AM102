@@ -1,0 +1,5 @@
+---
+import ErrorScreen from '../components/ErrorScreen.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="500 — A Storm in the System | Confluence" description="An unexpected error interrupted this journey."><ErrorScreen code="500 · SYSTEM ERROR" title="Something went wrong." message="An unexpected error interrupted your journey. Please try again in a moment." primaryAction={{label:'Try again',retry:true}} secondaryAction={{label:'Return home',href:'/'}} variant="storm" /></SiteLayout>

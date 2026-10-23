@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { editions } from '../../data/worlds';
+export function getStaticPaths(){return editions.map(edition=>({params:{year:edition.slug},props:{edition}}));}
+const {edition}=Astro.props;
+---
+<SiteLayout title={`${edition.title} | Confluence Archive`} description={edition.overview}><main class="feature-page archive-world" style={`--world-accent:${edition.accent}`}><header class="feature-head"><a class="back-link" href="/archive">← All editions</a><p class="eyebrow">ARCHIVE MEMORY / {edition.year}</p><h1>{edition.title}</h1><p class="concept-note">DEMONSTRATION ARCHIVE · NOT VERIFIED HISTORY</p><p>{edition.overview}</p></header><section class="problem-panel"><p class="eyebrow">HIGHLIGHTS & PROJECTS</p>{edition.projects.map(p=><article class="archive-project"><h2>{p.name}</h2><p>{p.description}</p><span class="concept-note">Source link: awaiting verified details</span></article>)}</section><a class="text-link" href="/themes">Explore current concept worlds →</a></main></SiteLayout>

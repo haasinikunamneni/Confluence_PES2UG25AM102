@@ -1,0 +1,7 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { themeWorlds } from '../../data/worlds';
+---
+<SiteLayout title="Theme Worlds | Confluence" description="Explore fictional concept worlds for the Confluence hackathon prototype.">
+<main class="feature-page"><header class="feature-head"><a class="back-link" href="/">← Confluence home</a><p class="eyebrow">THEME EXPLORER / DEMONSTRATION CONCEPTS</p><h1>Enter a world<br/><em>of possibility.</em></h1><p>These three themes are fictional demonstration concepts, not official event themes. Choose a world to explore its problem space and challenges.</p></header><section class="world-grid" aria-label="Theme worlds">{themeWorlds.map((w,i)=><a class={`world-card world-${w.world}`} href={`/themes/${w.slug}`} data-ripple-link style={`--world-accent:${w.accent};--world-image:url('/assets/${w.image}')`}><span class="world-index">0{i+1} / CONCEPT</span><span class="world-orb" aria-hidden="true"></span><span class="world-art-label">IMMERSIVE CONCEPT WORLD</span><h2>{w.title}</h2><p>{w.summary}</p><span class="world-enter">Enter world ↗</span></a>)}</section><section class="feature-foot"><p>Have a different direction in mind?</p><a class="text-link" href="/archive">Explore previous editions →</a></section></main>
+</SiteLayout>

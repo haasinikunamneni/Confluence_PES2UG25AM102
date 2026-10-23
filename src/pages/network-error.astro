@@ -1,0 +1,4 @@
+---
+import ErrorScreen from '../components/ErrorScreen.astro'; import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="Lost Connection | Confluence" description="Connection issue recovery page."><ErrorScreen code="NETWORK ERROR" title="We’ve lost the signal." message="Your connection seems to have disappeared into the storm. Check your internet and try again." primaryAction={{label:'Retry connection',retry:true}} secondaryAction={{label:'Return home',href:'/'}} variant="storm" /></SiteLayout>

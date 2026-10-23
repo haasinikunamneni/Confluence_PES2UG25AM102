@@ -1,0 +1,4 @@
+---
+import ErrorScreen from '../components/ErrorScreen.astro'; import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="Access Restricted | Confluence" description="You do not have permission to access this area."><ErrorScreen code="403 · ACCESS RESTRICTED" title="This path is closed." message="You don’t have permission to access this area." primaryAction={{label:'Return to dashboard',href:'/portal.html'}} secondaryAction={{label:'Return home',href:'/'}} variant="calm" /></SiteLayout>

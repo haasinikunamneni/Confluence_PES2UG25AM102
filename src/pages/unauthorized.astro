@@ -1,0 +1,4 @@
+---
+import ErrorScreen from '../components/ErrorScreen.astro'; import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="Sign In Required | Confluence" description="Sign in to access this area."><ErrorScreen code="401 · SIGN IN REQUIRED" title="You need to sign in." message="This area is reserved for authorized participants or organizers." primaryAction={{label:'Sign in',href:'/register.html'}} secondaryAction={{label:'Return home',href:'/'}} variant="calm" /></SiteLayout>

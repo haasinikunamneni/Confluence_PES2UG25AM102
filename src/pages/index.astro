@@ -1,0 +1,226 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+export const prerender = true;
+---
+<SiteLayout title="Confluence 2026 — IEEE CS PESU" description="Confluence is a national level hackathon presented by IEEE CS PESU, bringing together ideas, people and technology.">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ================= ENVIRONMENT (fixed, changes with scroll) ================= -->
+<div class="env" aria-hidden="true">
+  <div class="env__layer env__sky"></div>
+  <div class="env__layer env__blue"></div>
+  <div class="env__layer env__lav"></div>
+  <div class="env__layer env__horizon"></div>
+  <div class="env__layer env__dawn"></div>
+  <div class="env__layer scene">
+    <div class="scene__rig">
+      <!-- SKY FX: sun + clouds. Sits behind the stone (the SVG below) and is clipped at the horizon. -->
+      <div class="sky" aria-hidden="true">
+        <div class="sky__clip">
+          <div class="sky__halo"></div>
+          <div class="cloud cloud--far"><div class="cloud__drift"><img src="assets/sky/cloud-far.webp" alt="" width="1200" height="262" decoding="async"><i class="cloud__rim cloud__rim--cool"></i><i class="cloud__rim cloud__rim--warm"></i></div></div>
+          <div class="sky__sun"><span class="sky__sun-night"></span></div>
+          <div class="cloud cloud--mid"><div class="cloud__drift"><img src="assets/sky/cloud-mid.webp" alt="" width="1200" height="210" decoding="async"><i class="cloud__rim cloud__rim--cool"></i><i class="cloud__rim cloud__rim--warm"></i></div></div>
+          <div class="cloud cloud--near"><div class="cloud__drift"><img src="assets/sky/cloud-near.webp" alt="" width="1200" height="124" decoding="async"><i class="cloud__rim cloud__rim--cool"></i><i class="cloud__rim cloud__rim--warm"></i></div></div>
+        </div>
+      </div>
+      <svg class="scene__svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax meet" focusable="false">
+        <defs>
+          <linearGradient id="stoneG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="690" y2="0">
+            <stop offset="0" stop-color="#04060a"/><stop offset="1" stop-color="#0e1829"/>
+          </linearGradient>
+          <linearGradient id="edgeG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="690" y2="0">
+            <stop offset="0" stop-color="#7f9bd0" stop-opacity=".55"/><stop offset="1" stop-color="#d8e4fb"/>
+          </linearGradient>
+          <linearGradient id="riserG" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#a9bde0" stop-opacity=".34"/><stop offset="1" stop-color="#a9bde0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="spillG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#a9bde0" stop-opacity=".2"/><stop offset="1" stop-color="#a9bde0" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="warmG" cx="800" cy="722" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 722) scale(170 70) translate(-800 -722)">
+            <stop offset="0" stop-color="#f2e7d4" stop-opacity=".95"/><stop offset=".35" stop-color="#dccdb8" stop-opacity=".45"/><stop offset="1" stop-color="#a9bde0" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="floorG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#9db4de" stop-opacity=".42"/><stop offset=".5" stop-color="#3d567f" stop-opacity=".18"/><stop offset="1" stop-color="#070a10" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="blurE" x="-10%" y="-400%" width="120%" height="900%"><feGaussianBlur stdDeviation="5"/></filter>
+          <filter id="grain" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7"/>
+            <feColorMatrix values="0 0 0 0 .66  0 0 0 0 .74  0 0 0 0 .88  0 0 0 .07 0"/>
+          </filter>
+          <!-- Left staircase silhouette (the right side is its mirror) -->
+          <path id="sil" d="M0 900V300H200V430H380V560H540V660H680V900Z"/>
+          <clipPath id="clipSil"><use href="#sil"/></clipPath>
+
+          <g id="stoneSide">
+            <use href="#sil" fill="url(#stoneG)"/>
+            <rect x="0" y="0" width="690" height="900" filter="url(#grain)" clip-path="url(#clipSil)"/>
+            <!-- risers: lit faces turned toward the centre -->
+            <path d="M200 300l34 20v132l-34-22z" fill="url(#riserG)"/>
+            <path d="M380 430l30 18v130l-30-18z" fill="url(#riserG)"/>
+            <path d="M540 560l26 15v105l-26-15z" fill="url(#riserG)"/>
+            <path d="M680 660l20 12v60l-20-12z" fill="url(#riserG)" opacity=".8"/>
+          </g>
+          <g id="lightSide">
+            <rect x="0" y="300" width="200" height="46" fill="url(#spillG)"/>
+            <rect x="200" y="430" width="180" height="46" fill="url(#spillG)"/>
+            <rect x="380" y="560" width="160" height="40" fill="url(#spillG)"/>
+            <rect x="540" y="660" width="140" height="34" fill="url(#spillG)"/>
+            <g stroke="url(#edgeG)" stroke-width="2.2" fill="none" stroke-linecap="round">
+              <path d="M0 300H200"/><path d="M200 430H380"/><path d="M380 560H540"/><path d="M540 660H680"/>
+            </g>
+            <g stroke="#a9bde0" stroke-width="5" opacity=".6" filter="url(#blurE)" fill="none">
+              <path d="M40 300H200"/><path d="M210 430H380"/><path d="M390 560H540"/><path d="M550 660H680"/>
+            </g>
+          </g>
+        </defs>
+
+        <!-- Water plane + reflected horizon between the stairs -->
+        <rect x="640" y="722" width="320" height="178" fill="url(#floorG)"/>
+        <g stroke="#c9d8f2" stroke-linecap="round" opacity=".5">
+          <path class="floor-line" d="M742 742H858" stroke-width="1.4"/>
+          <path class="floor-line" d="M716 762H884" stroke-width="1.1" opacity=".7"/>
+          <path class="floor-line" d="M730 790H870" stroke-width="1" opacity=".5"/>
+          <path class="floor-line" d="M706 826H894" stroke-width="1" opacity=".35"/>
+        </g>
+        <ellipse cx="800" cy="722" rx="170" ry="70" fill="url(#warmG)"/>
+        <path d="M690 722H910" stroke="#f2e7d4" stroke-width="1.4" opacity=".85"/>
+
+        <!-- Stone -->
+        <use href="#stoneSide"/>
+        <use href="#stoneSide" transform="translate(1600 0) scale(-1 1)"/>
+        <!-- Edge light (breathes slowly; dims as the page brightens) -->
+        <g class="scene__lights">
+          <use href="#lightSide" class="light-l"/>
+          <use href="#lightSide" class="light-r" transform="translate(1600 0) scale(-1 1)"/>
+        </g>
+      </svg>
+      <!-- Light the sun casts on the opening and the water (in front of the stone, very restrained) -->
+      <div class="sky__spill" aria-hidden="true"></div>
+      <div class="sky__reflect" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="env__layer env__vignette"></div>
+</div>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="#home" aria-label="Confluence home">
+      <img class="chapter-logo" src="/assets/ieee-computer-society-pesu.png" width="420" height="140" alt="IEEE Computer Society PES University Student Branch Chapter" fetchpriority="high" decoding="async" />
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#home">Home</a><a href="#about">About</a><a href="/themes">Themes</a><a href="/roadmap">Roadmap</a><a href="#faq">FAQ</a><a href="/archive">Archive</a><a href="/announcements" class="announcement-nav">Announcements <span aria-hidden="true">◉</span></a>
+    </nav>
+    <a class="btn btn--ghost" href="https://REPLACE-WITH-OFFICIAL-GOOGLE-FORM-URL" data-register>Register now
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2.5 9.5l7-7M4 2.5h5.5V8"/></svg></a>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <a href="#home">Home</a><a href="#about">About</a><a href="/themes">Themes</a><a href="/roadmap">Roadmap</a><a href="#faq">FAQ</a><a href="/archive">Archive</a><a href="/announcements" class="announcement-nav">Announcements <span aria-hidden="true">◉</span></a>
+    <a class="btn btn--primary" href="https://REPLACE-WITH-OFFICIAL-GOOGLE-FORM-URL" data-register>Register now</a>
+  </nav>
+</header>
+
+<main id="main">
+<!-- ================= HERO — Nightfall ================= -->
+<section class="hero" id="home" aria-labelledby="hero-title">
+  <div class="hero__arc" aria-hidden="true">
+    <svg viewBox="0 0 1000 1000" fill="none">
+      <circle cx="500" cy="500" r="440" stroke="#a9bde0" stroke-opacity=".13" stroke-dasharray="1400 1400" />
+      <path d="M500 0V1000" stroke="#a9bde0" stroke-opacity=".10"/>
+    </svg>
+  </div>
+  <aside class="hero__note hero__note--l" aria-hidden="true"><span>Hack<br>Create<br>Converge</span></aside>
+  <aside class="hero__note hero__note--r" aria-hidden="true"><span>Build<br>Beyond<br>Boundaries</span></aside>
+
+  <div class="hero__body">
+    <p class="hero__eyebrow">IEEE CS PESU presents</p>
+    <h1 class="wordmark" id="hero-title">Confluence</h1>
+    <p class="hero__tag">Ideas<i>·</i>People<i>·</i>Technology<i>·</i>Impact</p>
+    <p class="hero__desc">A national level hackathon</p>
+    <a class="btn btn--primary" href="https://REPLACE-WITH-OFFICIAL-GOOGLE-FORM-URL" data-register>Register now
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 9.5l7-7M4 2.5h5.5V8"/></svg></a>
+  </div>
+
+  <div class="hero__foot">
+    <span data-location>Bengaluru, India</span>
+    <a href="#about">Scroll to explore
+      <svg viewBox="0 0 14 22" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M7 1v19M1.5 14.5L7 20l5.5-5.5"/></svg></a>
+  </div>
+</section>
+
+<!-- ================= ABOUT — Blue hour ================= -->
+<section class="section about" id="about" aria-labelledby="about-title">
+  <div class="wrap about__grid">
+    <h2 class="h2" id="about-title">Where ideas meet people and technology</h2>
+    <div>
+      <p class="about__lead" data-about-lead></p>
+      <p class="about__text" data-about-text></p>
+      <a class="about__chapter" href="#home" aria-label="Confluence, organized by IEEE Computer Society PES University Student Branch Chapter">
+        <img src="/assets/ieee-computer-society-pesu.png" width="420" height="140" loading="lazy" decoding="async" alt="IEEE Computer Society PES University Student Branch Chapter" />
+      </a>
+      <dl class="facts" id="facts"></dl>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THEMES — First light ================= -->
+<section class="section" id="themes" aria-labelledby="themes-title">
+  <div class="wrap">
+    <div class="themes__head">
+      <h2 class="h2" id="themes-title">Themes</h2>
+      <p data-themes-intro></p>
+    </div>
+    <div class="themes__grid">
+      <div class="tabs" role="tablist" aria-label="Hackathon themes" aria-orientation="vertical" id="tabs"></div>
+      <div class="panel" id="theme-panel" role="tabpanel" tabindex="0"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ROADMAP — Approaching dawn ================= -->
+<section class="section" id="roadmap" aria-labelledby="roadmap-title">
+  <div class="wrap">
+    <div class="roadmap__head">
+      <h2 class="h2" id="roadmap-title">Roadmap</h2>
+      <p data-roadmap-intro></p>
+    </div>
+    <ol class="timeline" id="timeline"></ol>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section faq" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <h2 class="h2" id="faq-title">Questions</h2>
+    <div id="faq-list"></div>
+  </div>
+</section>
+
+<!-- ================= CLOSING — Dawn ================= -->
+<section class="section closing" id="register" aria-labelledby="closing-title">
+  <h2 class="h2" id="closing-title">Come and build at Confluence</h2>
+  <p data-closing-text></p>
+  <a class="btn btn--dawn" href="https://REPLACE-WITH-OFFICIAL-GOOGLE-FORM-URL" data-register>Register now
+    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 9.5l7-7M4 2.5h5.5V8"/></svg></a>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <a class="footer-brand" href="#home" aria-label="Back to Confluence home"><img src="/assets/ieee-computer-society-pesu.png" width="420" height="140" loading="lazy" decoding="async" alt="IEEE Computer Society PES University Student Branch Chapter" /></a>
+    <span>© <span data-year>2026</span> IEEE CS PESU. Confluence.</span>
+    <span><a href="portal.html">Participant portal</a> · <a href="admin.html">Organizer demo</a> · <span id="footer-contact"></span></span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="position:relative;z-index:2;padding:2rem;text-align:center">Confluence 2026 — A National Level Hackathon by IEEE CS PESU. Enable JavaScript to see themes, roadmap and FAQs.</p></noscript>
+
+<script src="/js/content.js" defer></script>
+<script src="/js/main.js" defer></script>
+
+</SiteLayout>

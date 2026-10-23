@@ -1,0 +1,5 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { editions } from '../../data/worlds';
+---
+<SiteLayout title="Edition Archive | Confluence" description="Explore configurable archive concepts for past Confluence editions."><main class="feature-page"><header class="feature-head"><a class="back-link" href="/">← Confluence home</a><p class="eyebrow">ARCHIVE / MEMORY</p><h1>Every edition<br/><em>leaves a trace.</em></h1><p>Explore the evolving archive format. Records below are fictional placeholders until verified historical material is supplied.</p></header><section class="edition-grid">{editions.map(e=><a class="edition-card" href={`/archive/${e.slug}`} data-ripple-link style={`--world-accent:${e.accent}`}><span class="eyebrow">EDITION {e.year} · DEMO ARCHIVE</span><span class="edition-year">{e.year}</span><h2>{e.title}</h2><p>{e.overview}</p><span class="world-enter">Enter edition ↗</span></a>)}</section></main></SiteLayout>

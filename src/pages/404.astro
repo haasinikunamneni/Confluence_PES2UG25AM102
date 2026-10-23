@@ -1,0 +1,5 @@
+---
+import ErrorScreen from '../components/ErrorScreen.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="404 — Lost in the Clouds | Confluence" description="This page could not be found."><ErrorScreen code="404 · PAGE NOT FOUND" title="Looks like we’ve lost our way." message="This page has drifted beyond the horizon. It may have moved or no longer exists." primaryAction={{label:'Return home',href:'/'}} secondaryAction={{label:'Explore themes',href:'/#themes'}} variant="storm" /></SiteLayout>

@@ -1,0 +1,4 @@
+---
+import ErrorScreen from '../components/ErrorScreen.astro'; import SiteLayout from '../layouts/SiteLayout.astro';
+---
+<SiteLayout title="Submission Interrupted | Confluence" description="Your submission could not be completed."><ErrorScreen code="SUBMISSION INTERRUPTED" title="Your message got caught in the storm." message="We couldn’t submit your information. Your entered details should remain available so you can retry." primaryAction={{label:'Return to form',href:'/register.html'}} secondaryAction={{label:'Return home',href:'/'}} variant="storm" /></SiteLayout>
